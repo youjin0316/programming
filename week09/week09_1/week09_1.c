@@ -8,7 +8,7 @@ int main(void) {
 	int y;
 	
 	while(flag!=0){
-		y=3;
+		int y=3;
 		flag=0;
 	}
 	
