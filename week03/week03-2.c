@@ -10,7 +10,7 @@ int main(void) {
 	printf("input a number :");
 	scanf("%c", &c);
 	
-	i=c-0;
+	i=c-'0';
 	printf("The input number is %i\n",i);
 	
 	return 0;
