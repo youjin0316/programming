@@ -25,3 +25,4 @@ int board_getBoardCoin(int pos);
 void board_printBoardStatus(void);
 // ----- EX. 3 : board ------------
 #endif /* board_h */
+

@@ -43,6 +43,7 @@ int board_initBoard(void)
 {
     int i;
     int coin_pos;
+    int placed_coins=0;
     
     //variable initialization
     for (i=0;i<N_BOARD;i++)
@@ -56,11 +57,12 @@ int board_initBoard(void)
 // ----- EX. 5 : shark ------------
 
     //coin allocation
-   for(i=0;i<N_COINPOS;i++){
+   while(placed_coins<N_COINPOS){
    		coin_pos=rand()%N_BOARD;
    		
    		if(board_coin[coin_pos]<MAX_COIN){
    			board_coin[coin_pos]+=1;
+   			placed_coins++;
 		   }
 	   }
 
@@ -72,7 +74,19 @@ int board_initBoard(void)
 // ----- EX. 5 : shark ------------
 int board_stepShark(void)
 {
-
+	int steps = rand() % MAX_SHARKSTEP + 1;
+	int new_position = shark_position + steps;
+	
+	if (new_position >= N_BOARD) {
+        new_position = N_BOARD - 1; 
+    }
+	
+	for (int i = shark_position + 1; i <= new_position; i++) {
+            board_status[i] = BOARDSTATUS_NOK; 
+        }
+    
+	shark_position=new_position;
+	return shark_position;
 }
 // ----- EX. 5 : shark ------------
 
