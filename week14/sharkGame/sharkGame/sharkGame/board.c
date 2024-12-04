@@ -57,16 +57,13 @@ int board_initBoard(void)
 
     //coin allocation
    for(i=0;i<N_COINPOS;i++){
-   	while(1){
    		coin_pos=rand()%N_BOARD;
    		
-   		if(board_coin[coin_pos]==0){
-   			board_coin[coin_pos]=(rand()%MAX_COIN)+1;
-   			break;
+   		if(board_coin[coin_pos]<MAX_COIN){
+   			board_coin[coin_pos]+=1;
 		   }
 	   }
-   	
-   }
+
     return N_COINPOS;
 }
 // ----- EX. 3 : board ------------

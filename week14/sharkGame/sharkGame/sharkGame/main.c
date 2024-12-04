@@ -121,11 +121,30 @@ void checkDie(void)
 // ----- EX. 6 : game end ------------
 int getAlivePlayer(void)
 {
+	int i;
+	int cnt=0;
+	for(i=0;i<N_PLAYER;i++){
+		if(player_status[i]==PLAYERSTATUS_END)
+		cnt++;
+	}
+	return cnt;
    
 }
 
 int getWinner(void)
 {
+	int i;
+	int winner=0;
+	int max_coin=-1;
+	
+	for(i=0;i<N_PLAYER;i++){
+		if(player_coin[i]>max_coin){
+			max_coin=player_coin[i];
+			winner=i;
+		}
+	}
+	return winner;
+	
     
 }
 // ----- EX. 6 : game end ------------
@@ -175,12 +194,7 @@ int main(int argc, const char * argv[]) {
         
         //step 2-1. status printing
 // ----- EX. 3 : board ------------
-        board_printBoardStatus();
-        
-        dieResult=rolldie();
-        pos=(pos+dieResult)%N_BOARD;//Board circulation?
-        coinResult=board_getBoardCoin(pos);
-        
+        board_printBoardStatus();    
 // ----- EX. 3 : board ------------
 // ----- EX. 4 : player ------------
         printPlayerStatus();
@@ -207,6 +221,7 @@ int main(int argc, const char * argv[]) {
         //step 2-4. coin
         coinResult = board_getBoardCoin(player_position[turn]);
         player_coin[turn] += coinResult;
+        printf("%s gets %d coin, %s's coin: %d\n",player_name[turn],coinResult,player_name[turn],player_coin[turn]);
     
         
         //step 2-5. end process
