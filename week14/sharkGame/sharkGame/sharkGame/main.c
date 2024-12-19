@@ -136,12 +136,16 @@ int getWinner(void)
 	int i;
 	int winner=-1;
 	int max_coin=-1;
+	int player_arrival_order[N_PLAYER];
 	
 	for(i=0;i<N_PLAYER;i++){
-			if(player_coin[i]>max_coin){
+		if (player_status[i] == PLAYERSTATUS_END) {
+			if(player_coin[i]>max_coin|| 
+                (player_coin[i] == max_coin && player_arrival_order[i] < player_arrival_order[winner])){
 				max_coin=player_coin[i];
 			    winner=i;
-			}	
+			}
+	    }
 	}
 	return winner;
 }
@@ -153,6 +157,7 @@ int main(int argc, const char * argv[]) {
     int i;
     int turn=0;
     int pos=0;
+    int player_arrival_order[N_PLAYER];
 
 // ----- EX. 1 : Preparation------------
     srand(time(NULL));
@@ -171,6 +176,7 @@ int main(int argc, const char * argv[]) {
         player_position[i] = 0;
         player_coin[i] = 0;
         player_status[i] = PLAYERSTATUS_LIVE;
+        player_arrival_order[i] = -1;
         printf("Player %i's name: ", i);
         scanf("%s", player_name[i]);
     }
@@ -225,6 +231,9 @@ int main(int argc, const char * argv[]) {
         //step 2-5. end process
         if (player_position[turn] == N_BOARD - 1) {
             player_status[turn] = PLAYERSTATUS_END;
+            if (player_arrival_order[turn] == -1) {
+                player_arrival_order[turn] = turn;
+            }
             printf("%s has reached the final position\n",player_name[turn]);
         }
         
@@ -248,6 +257,7 @@ int main(int argc, const char * argv[]) {
     if (winner==-1) 
     printf("No winner, all players are dead!\n");
     
+    if (winner!=-1)
     printf("%i players are alive! winner is %s\n", getAlivePlayer(), player_name[getWinner()]);
 // ----- EX. 6 : game end ------------
     
